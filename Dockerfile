@@ -47,6 +47,7 @@ RUN wget -O models/loras/xl_more_art-full_v1.safetensors https://civitai.com/api
 RUN git clone https://github.com/cubiq/ComfyUI_InstantID.git custom_nodes/ComfyUI_InstantID 
 ## 安装ComfyUI_InstantID项目需要的python库
 RUN pip3 install insightface onnxruntime onnxruntime-gpu
+RUN mkdir models/insightface
 RUN mkdir models/insightface/models
 RUN mkdir models/instantid
 ## 下载并解压InsightFace模型antelopev2
