@@ -1,6 +1,7 @@
 # Use Nvidia CUDA base image
 FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04 as base
-
+# Install libGL.so.1
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
 # Prevents prompts from packages asking for user input during installation
 ENV DEBIAN_FRONTEND=noninteractive
 # Prefer binary wheels over source distributions for faster pip installations
