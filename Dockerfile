@@ -1,7 +1,7 @@
 # Use Nvidia CUDA base image
 FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04 as base
 # Install libGL.so.1
-RUN apt-get update && apt-get install -y libgl1-mesa-glx
+
 # Prevents prompts from packages asking for user input during installation
 ENV DEBIAN_FRONTEND=noninteractive
 # Prefer binary wheels over source distributions for faster pip installations
@@ -18,7 +18,7 @@ RUN apt-get update && apt-get install -y \
 
 # Clean up to reduce image size
 RUN apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
-
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
 # Clone ComfyUI repository
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git /comfyui
 
