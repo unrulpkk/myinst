@@ -63,7 +63,7 @@ def validate_input(job_input):
             )
 
     # Return validated data and no error
-    return {"workflow": workflow, "images": images}, None
+    return {"workflow": workflow, "images": images, "extra_data": job_input.get("extra_data",{})}, None
 
 
 def check_server(url, retries=50, delay=500):
@@ -153,7 +153,7 @@ def upload_images(images):
     }
 
 
-def queue_workflow(workflow):
+def queue_workflow(workflow, extra_data={}):
     """
     Queue a workflow to be processed by ComfyUI
 
@@ -165,7 +165,10 @@ def queue_workflow(workflow):
     """
 
     # The top level element "prompt" is required by ComfyUI
-    data = json.dumps({"prompt": workflow}).encode("utf-8")
+    if extra_data:
+        data = json.dumps({"prompt": workflow, "extra_data":extra_data}).encode("utf-8")
+    else:
+        data = json.dumps({"prompt": workflow}).encode("utf-8")
 
     req = urllib.request.Request(f"http://{COMFY_HOST}/prompt", data=data)
     return json.loads(urllib.request.urlopen(req).read())
@@ -296,6 +299,7 @@ def handler(job):
     # Extract validated data
     workflow = validated_data["workflow"]
     images = validated_data.get("images")
+    extra_data = validated_data["extra_data"]
 
     # Make sure that the ComfyUI API is available
     check_server(
@@ -312,7 +316,7 @@ def handler(job):
 
     # Queue the workflow
     try:
-        queued_workflow = queue_workflow(workflow)
+        queued_workflow = queue_workflow(workflow,extra_data)
         prompt_id = queued_workflow["prompt_id"]
         print(f"runpod-worker-comfy - queued workflow with ID {prompt_id}")
     except Exception as e:
