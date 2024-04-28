@@ -37,7 +37,7 @@ RUN pip3 install runpod requests
 RUN wget -O models/checkpoints/YFilter_SDXL_RealMix_V2.safetensors https://liblibai-online.vibrou.com/web/model/ab5ff53669bd442bc06562882744ebceb25b9a709bcf18344d5c2ed6d156f01a.safetensors?attname=YFilter_SDXL_RealMix_V2.safetensors
 RUN wget -O models/vae/sdxl_vae.safetensors https://huggingface.co/stabilityai/sdxl-vae/resolve/main/sdxl_vae.safetensors
 RUN wget -O models/vae/sdxl-vae-fp16-fix.safetensors https://huggingface.co/madebyollin/sdxl-vae-fp16-fix/resolve/main/sdxl_vae.safetensors
-RUN wget -O models/loras/xl_more_art-full_v1.safetensors https://civitai.com/api/download/models/152309
+#RUN wget -O models/loras/xl_more_art-full_v1.safetensors https://civitai.com/api/download/models/152309
 
 # Example for adding specific models into image
 # ADD models/checkpoints/sd_xl_base_1.0.safetensors models/checkpoints/
